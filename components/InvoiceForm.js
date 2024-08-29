@@ -119,7 +119,7 @@ const InvoiceForm = () => {
               <Text>No items added yet.</Text>
             )}
 
-            <View style={{ flex: 1, flexDirection: 'row' ,justifyContent:''}}>
+            <View style={{ flex: 1, flexDirection: 'row' ,justifyContent:'space-between'}}>
               <Text style={{ }}>Total</Text>
               <Text style={{  }}>{`${calcTotal(fields)}`}</Text>
             </View>
