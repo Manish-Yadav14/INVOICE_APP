@@ -14,9 +14,20 @@ const CloudEntries = ({navigation}) => {
   },[]);
 
 
-  const editEntry = (entry) => {
+  const editEntry = async (entry) => {
+    const existingEntries =
+        JSON.parse(await AsyncStorage.getItem("entries")) || [];
+
+      const isPresent = existingEntries.some(
+        (entry) =>
+          entry.fileName === dataToSave.fileName
+      );
+      if (isPresent){
+        Alert.alert("File Already Exists");
+        return ;
+      }
     // Navigate to InvoiceForm with entry data as parameters
-    navigation.navigate('InvoiceForm', { entry });
+    await navigation.navigate('InvoiceForm', { entry });
   };
 
 

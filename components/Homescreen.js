@@ -56,7 +56,11 @@ const NewFilesStack = () => {
   };
   console.log("This hit");
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      detachPreviousScreen: true,
+    }}
+    >
       <Stack.Screen
         name="NewFiles"
         component={InvoiceForm}
@@ -80,6 +84,7 @@ const Homescreen = () => {
           height: 60,
           width: 340,
         },
+        detachPreviousScreen:true,
         headerShown: false,
         tabBarHideOnKeyboard: true,
       }}
