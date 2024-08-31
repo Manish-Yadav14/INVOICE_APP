@@ -1,16 +1,19 @@
 import React from 'react';
-import { SafeAreaView ,StyleSheet} from 'react-native';
+import { SafeAreaView ,StyleSheet,Text} from 'react-native';
 import InvoiceForm from './InvoiceForm.js';
 // import InvoiceForm from './temp.js';
 
 import Signup from './components/Signup.js'
 import Login from './components/Login.js';
+import AddInvoice from './components/AddInvoice.js';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Signup/>
-      <Login/>
+      {/* <Signup/>
+      <Text>    </Text>
+      <Login/> */}
+      <AddInvoice/>
     </SafeAreaView>
   );
 };
