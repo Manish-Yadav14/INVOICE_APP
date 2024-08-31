@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const SavedEntries = ({navigation}) => {
   const [entries, setEntries] = useState([]);
@@ -35,10 +37,16 @@ const SavedEntries = ({navigation}) => {
       console.log('Error deleting entry: ', error);
     }
   };
-
+  const upload = async (item)=>{
+    await addDoc(collection(db, "invoices"), {
+      item
+    });
+    Alert.alert("Success", "Invoice added successfully.");
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Saved Entries</Text>
+
       <FlatList
         data={entries}
         keyExtractor={(item, index) => index.toString()}
@@ -51,9 +59,12 @@ const SavedEntries = ({navigation}) => {
             <Button title="Edit" onPress={() => editEntry(item)} />
             <View style={{margin:5}}/>
             <Button title="Delete" onPress={() => deleteEntry(index)} />
+            <View style={{margin:5}}/>
+            <Button title="Add To Cloud" onPress={() => upload(item)} />
           </View>
         )}
-      />
+        />
+        
     </View>
   );
 };
