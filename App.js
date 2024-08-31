@@ -1,20 +1,21 @@
 import React from 'react';
-import { SafeAreaView ,StyleSheet,Text} from 'react-native';
+import { SafeAreaView ,StyleSheet} from 'react-native';
 import InvoiceForm from './InvoiceForm.js';
-// import InvoiceForm from './temp.js';
-
+import Homescreen from './components/Homescreen.js';
 import Signup from './components/Signup.js'
 import Login from './components/Login.js';
-import AddInvoice from './components/AddInvoice.js';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Signup/>
-      <Text>    </Text>
-      <Login/> */}
-      <AddInvoice/>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"  
+        screenOptions={{
+        headerShown: false,
+      }}>
+        <Stack.Screen name="SIGNUP" component={Signup} />
+        <Stack.Screen name="Home" component={Homescreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
