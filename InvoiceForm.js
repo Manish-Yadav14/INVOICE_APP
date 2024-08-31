@@ -16,7 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"; // Import 
 import { printToFileAsync } from "expo-print";
 import { shareAsync } from "expo-sharing";
 import Dialog from "react-native-dialog";
-
+import FlatButton from "./FlatButton";
 
 const InvoiceForm = ({ route, navigation }) => {
   const { entry } = route.params || {};
@@ -351,6 +351,7 @@ const InvoiceForm = ({ route, navigation }) => {
               />
             </View>
             <Button onPress={addItem} title="Add Item" />
+            {/* <FlatButton onPress={addItem} text="Add Item" c="#fb5607" /> */}
           </Card.Content>
         </Card>
         <Text></Text>

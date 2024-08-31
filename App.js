@@ -3,6 +3,8 @@ import { SafeAreaView ,StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import InvoiceForm from './InvoiceForm.js';
+import Invoice1 from './components/Forms/Invoice1.js';
+import Invoice2 from './components/Forms/Invoice1.js';
 import Homescreen from './components/Homescreen.js';
 import Signup from './components/Signup.js'
 import Login from './components/Login.js';
