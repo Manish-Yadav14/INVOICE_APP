@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import InvoiceForm from "../InvoiceForm";
 import Invoice1 from "./Forms/Invoice1";
 import SavedEntries from "./SavedEntries";
+import CloudEntries from "./CloudEntries";
 import { shadow, Title } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
@@ -118,7 +119,7 @@ const Homescreen = () => {
       />
       <Tab.Screen
         name="GET FILES"
-        component={InvoiceForm}
+        component={CloudEntries}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -136,7 +137,7 @@ const Homescreen = () => {
       <Tab.Screen
         name="UPLOAD"
         component={InvoiceForm}
-        options={{
+        options= {{
           tabBarIcon: ({ focused }) => (
             <Image
               source={
@@ -144,9 +145,13 @@ const Homescreen = () => {
                   ? require("../assets/ic_action_cloud_upload.png") // Active icon
                   : require("../assets/ic_action_cloud_upload.png") // Inactive icon
               }
+              tintColor={focused ? 'red':'grey'}
               style={{ top: 5, width: 45, height: 45, resizeMode: "contain" }}
             />
           ),
+          style: {
+            backgroundColor: 'grey',//color you want to change
+          },
           tabBarLabel: "",
         }}
       />

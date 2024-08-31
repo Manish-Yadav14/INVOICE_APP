@@ -5,12 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const SavedEntries = ({navigation}) => {
+const CloudEntries = ({navigation}) => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
     loadEntries();
-  });
+  },[]);
 
   const loadEntries = async () => {
     try {
@@ -37,7 +37,7 @@ const SavedEntries = ({navigation}) => {
       console.log('Error deleting entry: ', error);
     }
   };
-  const upload = async (item)=>{
+  const getCloudData = async (item)=>{
     await addDoc(collection(db, "invoices"), {
       item
     });
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8 }
 });
 
-export default SavedEntries;
+export default CloudEntries;

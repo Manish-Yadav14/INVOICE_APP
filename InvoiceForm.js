@@ -30,10 +30,6 @@ const InvoiceForm = ({ route, navigation }) => {
       setValue("to", entry.to);
       setValue("from", entry.from);
       setValue("date", entry.date);
-      // fields.items=entry.items
-      // entry.items.forEach((item) => {
-      //   append(item)
-      // });
       replace(entry.items);
     }
   }, [entry]);
@@ -121,18 +117,6 @@ const InvoiceForm = ({ route, navigation }) => {
     try {
       const existingEntries =
         JSON.parse(await AsyncStorage.getItem("entries")) || [];
-
-      // const isDuplicate = existingEntries.some(
-      //   (entry) =>
-      //     entry.to === dataToSave.to &&
-      //     entry.from === dataToSave.from &&
-      //     entry.date === dataToSave.date &&
-      //     JSON.stringify(entry.items) === JSON.stringify(dataToSave.items)
-      // );
-      // if (isDuplicate) {
-      //   Alert.alert("Invoice already exists!");
-      //   return;
-      // }
       const updatedEntries = [...existingEntries, dataToSave];
       await AsyncStorage.setItem("entries", JSON.stringify(updatedEntries));
       Alert.alert("New Entry saved successfully!");
