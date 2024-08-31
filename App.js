@@ -1,17 +1,24 @@
 import React from 'react';
 import { SafeAreaView ,StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import InvoiceForm from './InvoiceForm.js';
-// import InvoiceForm from './temp.js';
-
+import Homescreen from './components/Homescreen.js';
 import Signup from './components/Signup.js'
 import Login from './components/Login.js';
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Signup/>
-      <Login/>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home"  
+        screenOptions={{
+        headerShown: false,
+      }}>
+        <Stack.Screen name="SIGNUP" component={Signup} />
+        <Stack.Screen name="Home" component={Homescreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

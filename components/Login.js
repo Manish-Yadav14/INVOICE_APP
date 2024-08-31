@@ -25,7 +25,7 @@ const Login = () => {
 
   return (
     <View>
-      <Text>Login</Text>
+      <Text style={{margin:'auto' }}>Login</Text>
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
       <TextInput
         placeholder="Email"
@@ -33,14 +33,14 @@ const Login = () => {
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
-        style={{ borderWidth: 1, margin: 10, padding: 8 }}
+        style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ borderWidth: 1, margin: 10, padding: 8 }}
+        style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
       <Button title="Login" onPress={handleLogin} />
     </View>

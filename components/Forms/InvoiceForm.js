@@ -107,7 +107,7 @@ const InvoiceForm = () => {
               fields.map((item, index) => (
                 <View key={item.id} style={styles.itemDisplayRow}>
                   <Text style={styles.itemText}>{`${item.description}`}</Text>
-                  <Text style={{ height: 40, width: 30, margin: 15, justifyContent: 'center', overflow: 'hidden' }}>{`${item.price}`}</Text>
+                  <Text style={{flex:1, height: 40, width: 50, margin: 15, justifyContent: 'center', overflow: 'hidden' }}>{`${item.price}`}</Text>
                   {/* Delete Item Button */}
                   <IconButton
                     icon="delete"
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   sectionTitle: { marginRight: 15, padding: 10, justifyContent: 'center', alignContent: 'center' },
   itemRow: { flexDirection: 'row', alignItems: 'center', margin: 10, padding: 10, },
   input: { flex: 1, marginRight: 10, borderBottomWidth: 1, padding: 4 },
-  itemDisplayRow: { flexDirection: 'row' },
+  itemDisplayRow: { flex:1,flexDirection: 'row' ,},
   itemText: { height: 40, width: 100, margin: 15, justifyContent: 'center', overflow: 'hidden' },
   itemInput: { height: 40, width: 70, overflow: 'hidden' }
 });
