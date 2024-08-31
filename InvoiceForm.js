@@ -8,15 +8,20 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
+  
 } from "react-native";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { Card, List, IconButton } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage for saving entries
 import { printToFileAsync } from "expo-print";
 import { shareAsync } from "expo-sharing";
+import Dialog from "react-native-dialog";
+
+
+
 const InvoiceForm = ({ route, navigation }) => {
   const { entry } = route.params || {};
-  const { control, handleSubmit, setValue, getValues } = useForm({
+  const { control, handleSubmit, setValue, getValues,reset } = useForm({
     items: [{ description: "", price: 0 }],
   });
 
@@ -27,16 +32,33 @@ const InvoiceForm = ({ route, navigation }) => {
 
   useEffect(() => {
     if (entry) {
-      setValue("to", entry.to);
-      setValue("from", entry.from);
-      setValue("date", entry.date);
-      replace(entry.items);
+      // Resetting form state
+      setValue("to", entry.to || "");
+      setValue("from", entry.from || "");
+      setValue("date", entry.date || "");
+      replace(entry.items || []);
+      setFileName(entry.fileName || "");
+    } else {
+      // In case no entry is passed, initialize with empty values
+      reset({
+        to: "",
+        from: "",
+        date: "",
+        items: [{ description: "", price: 0 }],
+      });
+      setFileName('');
     }
-  }, [entry]);
+    console.log("Loaded");
+  }, []);
 
   const [descrpt, setDescription] = useState("");
   const [prce, setPrice] = useState("");
   const [invoiceData, setInvoiceData] = useState({}); // State to store the current invoice data
+  const [visible, setVisible] = useState(false);
+  const [fileName, setFileName] = useState('');
+
+  const showDialog = () => setVisible(true);
+  const handleCancel = () => setVisible(false);
 
   const onSubmit = (data) => console.log(data);
 
@@ -65,6 +87,7 @@ const InvoiceForm = ({ route, navigation }) => {
   // Function to save entry
   const saveEntry = async () => {
     const dataToSave = {
+      fileName:fileName,
       to: getValues("to"),
       from: getValues("from"),
       date: getValues("date"),
@@ -75,39 +98,34 @@ const InvoiceForm = ({ route, navigation }) => {
       const existingEntries =
         JSON.parse(await AsyncStorage.getItem("entries")) || [];
 
-      const isDuplicate = existingEntries.some(
+      const isPresent = existingEntries.some(
         (entry) =>
-          entry.to === dataToSave.to &&
-          entry.from === dataToSave.from &&
-          entry.date === dataToSave.date &&
-          JSON.stringify(entry.items) === JSON.stringify(dataToSave.items)
+          entry.fileName === dataToSave.fileName
       );
-      if (isDuplicate) {
-        Alert.alert("Invoice already exists!");
-        return;
-      } else {
+      if (isPresent) {
         existingEntries.some((entry) => {
           if (
-            entry.to === dataToSave.to &&
-            entry.from === dataToSave.from &&
-            entry.date === dataToSave.date
+            entry.fileName=== dataToSave.fileName 
           ) {
             entry.items = dataToSave.items;
             entry.total = dataToSave.total;
+            Alert.alert("Entry saved successfully!");
           }
         });
+      } else {
+        Alert.alert("Please Save As First");
       }
       await AsyncStorage.setItem("entries", JSON.stringify(existingEntries));
-      // const updatedEntries = [...existingEntries, dataToSave];
-      Alert.alert("Entry saved successfully!");
-      setInvoiceData(dataToSave); // Update state with the current data
+      setInvoiceData(dataToSave);
     } catch (error) {
       console.log("Error saving entry: ", error);
     }
   };
 
   const saveAsEntry = async () => {
+    setVisible(false);
     const dataToSave = {
+      fileName:fileName,
       to: getValues("to"),
       from: getValues("from"),
       date: getValues("date"),
@@ -117,15 +135,25 @@ const InvoiceForm = ({ route, navigation }) => {
     try {
       const existingEntries =
         JSON.parse(await AsyncStorage.getItem("entries")) || [];
+
+        const isPresent = existingEntries.some(
+          (entry) =>
+            entry.fileName === dataToSave.fileName
+        );
+
+        if (isPresent){
+          Alert.alert("Filename Already Exists");
+          return;
+        }
+
       const updatedEntries = [...existingEntries, dataToSave];
       await AsyncStorage.setItem("entries", JSON.stringify(updatedEntries));
       Alert.alert("New Entry saved successfully!");
-      setInvoiceData(dataToSave); // Update state with the current data
+      setInvoiceData(dataToSave);
     } catch (error) {
       console.log("Error saving entry: ", error);
     }
   };
-
   const html = `
   <html>
       <head>
@@ -330,7 +358,21 @@ const InvoiceForm = ({ route, navigation }) => {
         {/* Save Button */}
         <Button title="Save" onPress={saveEntry} />
         <View style={{ margin: 5 }} />
-        <Button title="Save AS" onPress={saveAsEntry} />
+        <Button title="Save AS" onPress={showDialog} />
+
+        {/* Save AS file name dialog */}
+
+        <Dialog.Container visible={visible}>
+            <Dialog.Title>Save As</Dialog.Title>
+            <Dialog.Description>Enter a name for this file:</Dialog.Description>
+            <Dialog.Input
+              placeholder="File name"
+              onChangeText={setFileName}
+              value={fileName}
+            />
+            <Dialog.Button label="Cancel" onPress={handleCancel} />
+            <Dialog.Button label="Save" onPress={saveAsEntry} />
+        </Dialog.Container>
         <View style={{ margin: 5 }} />
         <Button title="Print Pdf" onPress={generatePdf} />
       </View>

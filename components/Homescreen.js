@@ -46,11 +46,22 @@ const CloudEntriesStack = () => {
   );
 };
 const NewFilesStack = () => {
+  const emptyEntry = {
+    fileName: '',
+    to: '',
+    from: '',
+    date: '',
+    items: [{ description: "", price: 0 }],
+    total: 0,
+  };
+  console.log("This hit");
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="NewFiles"
         component={InvoiceForm}
+        key={Date.now().toString()}
+        initialParams={{ entry: null }}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -72,8 +83,8 @@ const Homescreen = () => {
         headerShown: false,
         tabBarHideOnKeyboard: true,
       }}
-    >
-      <Tab.Screen
+    > 
+      {/* <Tab.Screen
         name="SAVE"
         component={Invoice1}
         options={{
@@ -91,7 +102,7 @@ const Homescreen = () => {
           ),
           tabBarLabel: "",
         }}
-      />
+      /> */}
       <Tab.Screen
         name="ALL FILE"
         component={SavedEntriesStack} // Use the stack for SavedEntries
@@ -150,7 +161,7 @@ const Homescreen = () => {
           tabBarLabel: "",
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="UPLOAD"
         component={InvoiceForm}
         options= {{
@@ -170,7 +181,7 @@ const Homescreen = () => {
           },
           tabBarLabel: "",
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

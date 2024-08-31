@@ -52,8 +52,7 @@ const SavedEntries = ({navigation}) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
           <View style={styles.entry}>
-            <Text>To: {item.to}</Text>
-            <Text>From: {item.from}</Text>
+            <Text>FileName: {item.fileName}</Text>
             <Text>Date: {item.date}</Text>
             <Text>Total: {item.total}</Text>
             <Button title="Edit" onPress={() => editEntry(item)} />

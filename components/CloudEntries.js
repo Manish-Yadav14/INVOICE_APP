@@ -30,7 +30,7 @@ const CloudEntries = ({navigation}) => {
       Alert.alert("Error", "Failed to delete invoice.");
     }
   };
- 
+
   const getCloudData = async ()=>{
     try {
       const querySnapshot = await getDocs(collection(db, "invoices"));
@@ -58,8 +58,7 @@ const CloudEntries = ({navigation}) => {
         keyExtractor={(item, id) => id.toString()}
         renderItem={({ item }) => (
           <View style={styles.entry}>
-            <Text>To: {item.item.to}</Text>
-            <Text>From: {item.item.from}</Text>
+            <Text>FileName: {item.item.fileName}</Text>
             <Text>Date: {item.item.date}</Text>
             <Text>Total: {item.item.total}</Text>
             <Button title="Edit" onPress={() => editEntry(item.item)} />
