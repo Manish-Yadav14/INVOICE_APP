@@ -6,6 +6,7 @@ import InvoiceForm from "../InvoiceForm";
 import Invoice1 from "./Forms/Invoice1";
 import SavedEntries from "./SavedEntries";
 import CloudEntries from "./CloudEntries";
+import FormEntries from "./FormEntries";
 import { shadow, Title } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
@@ -56,16 +57,17 @@ const NewFilesStack = () => {
   };
   console.log("This hit");
   return (
-    <Stack.Navigator
-    screenOptions={{
-      detachPreviousScreen: true,
-    }}
-    >
+    <Stack.Navigator> 
       <Stack.Screen
-        name="NewFiles"
-        component={InvoiceForm}
-        key={Date.now().toString()}
-        initialParams={{ entry: null }}
+        name="FormEntries"
+        component={FormEntries}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name = "NewFiles"
+        component = {InvoiceForm}
+        // key = {Date.now().toString()}
+        // initialParams={{ entry: null,flag: true }}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -88,26 +90,7 @@ const Homescreen = () => {
         headerShown: false,
         tabBarHideOnKeyboard: true,
       }}
-    > 
-      {/* <Tab.Screen
-        name="SAVE"
-        component={Invoice1}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={require("../assets/ic_action_save.png")}
-              style={{
-                top: 5,
-                width: 45,
-                height: 45,
-                resizeMode: "contain",
-                elevation: 5,
-              }}
-            />
-          ),
-          tabBarLabel: "",
-        }}
-      /> */}
+    >
       <Tab.Screen
         name="ALL FILE"
         component={SavedEntriesStack} // Use the stack for SavedEntries
@@ -166,27 +149,6 @@ const Homescreen = () => {
           tabBarLabel: "",
         }}
       />
-      {/* <Tab.Screen
-        name="UPLOAD"
-        component={InvoiceForm}
-        options= {{
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={
-                focused
-                  ? require("../assets/ic_action_cloud_upload.png") // Active icon
-                  : require("../assets/ic_action_cloud_upload.png") // Inactive icon
-              }
-              tintColor={focused ? 'red':'grey'}
-              style={{ top: 5, width: 45, height: 45, resizeMode: "contain" }}
-            />
-          ),
-          style: {
-            backgroundColor: 'grey',//color you want to change
-          },
-          tabBarLabel: "",
-        }}
-      /> */}
     </Tab.Navigator>
   );
 };

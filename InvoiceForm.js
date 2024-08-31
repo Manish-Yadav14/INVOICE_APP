@@ -18,7 +18,7 @@ import { shareAsync } from "expo-sharing";
 import Dialog from "react-native-dialog";
 
 
-const InvoiceForm = ({ route, navigation,flag }) => {
+const InvoiceForm = ({ route, navigation }) => {
   const { entry } = route.params || {};
   const { control, handleSubmit, setValue, getValues,reset } = useForm({
     items: [{ description: "", price: 0 }],
@@ -28,7 +28,7 @@ const InvoiceForm = ({ route, navigation,flag }) => {
     control,
     name: "items",
   });
-  console.log(flag)
+  // console.log(flag)
   useEffect(() => {
     if (entry) {
       // Resetting form state
