@@ -6,7 +6,7 @@ import { auth } from '../firebase'; // Adjust path as necessary
 import InvoiceForm from "../InvoiceForm";
 // import { useNavigation } from "@react-navigation/native"; // Import navigation hook
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,6 +16,8 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in successfully");
+      navigation.replace('Home')
+
        // Navigate to the InvoiceForm component
       //  navigation.navigate("InvoiceForm");
     } catch (err) {

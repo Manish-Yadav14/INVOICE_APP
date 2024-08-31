@@ -2,69 +2,75 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, getDocs,doc,deleteDoc} from "firebase/firestore";
 import { db } from "../firebase";
+import InvoiceForm from "../InvoiceForm"
 
 const CloudEntries = ({navigation}) => {
-  const [entries, setEntries] = useState([]);
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    loadEntries();
+    getCloudData();
   },[]);
 
-  const loadEntries = async () => {
-    try {
-      const savedEntries = JSON.parse(await AsyncStorage.getItem('entries')) || [];
-      setEntries(savedEntries);
-    } catch (error) {
-      console.log('Error loading entries: ', error);
-    }
-  };
+
   const editEntry = (entry) => {
     // Navigate to InvoiceForm with entry data as parameters
     navigation.navigate('InvoiceForm', { entry });
   };
 
 
-  const deleteEntry = async (index) => {
+  const deleteEntry = async (id) => {
     try {
-      const updatedEntries = [...entries];
-      updatedEntries.splice(index, 1);
-      await AsyncStorage.setItem('entries', JSON.stringify(updatedEntries));
-      setEntries(updatedEntries);
-      Alert.alert("Entry deleted successfully!");
+      await deleteDoc(doc(db, "invoices", id));
+      Alert.alert("Success", "Invoice deleted successfully.");
+      setInvoices((prev) => prev.filter((invoice) => invoice.id !== id)); // Update state after deletion
     } catch (error) {
-      console.log('Error deleting entry: ', error);
+      console.error("Error deleting document: ", error);
+      Alert.alert("Error", "Failed to delete invoice.");
     }
   };
-  const getCloudData = async (item)=>{
-    await addDoc(collection(db, "invoices"), {
-      item
-    });
-    Alert.alert("Success", "Invoice added successfully.");
+ 
+  const getCloudData = async ()=>{
+    try {
+      const querySnapshot = await getDocs(collection(db, "invoices"));
+      const invoicesList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setInvoices(invoicesList);
+    } catch (error) {
+      console.error("Error fetching invoices: ", error);
+      Alert.alert("Error", "Failed to fetch invoices.");
+    }
+    // await addDoc(collection(db, "invoices"), {
+    //   item
+    // });
+    // Alert.alert("Success", "Invoice added successfully.");
   }
+  console.log(invoices);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Saved Entries</Text>
 
       <FlatList
-        data={entries}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
+        data={invoices}
+        keyExtractor={(item, id) => id.toString()}
+        renderItem={({ item }) => (
           <View style={styles.entry}>
-            <Text>To: {item.to}</Text>
-            <Text>From: {item.from}</Text>
-            <Text>Date: {item.date}</Text>
-            <Text>Total: {item.total}</Text>
-            <Button title="Edit" onPress={() => editEntry(item)} />
+            <Text>To: {item.item.to}</Text>
+            <Text>From: {item.item.from}</Text>
+            <Text>Date: {item.item.date}</Text>
+            <Text>Total: {item.item.total}</Text>
+            <Button title="Edit" onPress={() => editEntry(item.item)} />
             <View style={{margin:5}}/>
-            <Button title="Delete" onPress={() => deleteEntry(index)} />
+            <Button title="Delete" onPress={() => deleteEntry(item.id)} />
             <View style={{margin:5}}/>
-            <Button title="Add To Cloud" onPress={() => upload(item)} />
           </View>
         )}
         />
-        
+
+        <Button title="Get From Cloud" onPress={() => getCloudData()} />
     </View>
   );
 };

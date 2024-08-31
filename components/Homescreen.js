@@ -29,6 +29,22 @@ const SavedEntriesStack = () => {
   );
 };
 
+const CloudEntriesStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="CloudEntries"
+        component={CloudEntries}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InvoiceForm"
+        component={InvoiceForm}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
 const NewFilesStack = () => {
   return (
     <Stack.Navigator>
@@ -119,7 +135,7 @@ const Homescreen = () => {
       />
       <Tab.Screen
         name="GET FILES"
-        component={CloudEntries}
+        component={CloudEntriesStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
