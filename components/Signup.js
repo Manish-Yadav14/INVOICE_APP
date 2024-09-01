@@ -12,7 +12,7 @@ const Signup = ({navigation}) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered successfully");
-      navigation.replace('Home')
+      navigation.replace('Login')
     } catch (err) {
       setError(err.message);
     }

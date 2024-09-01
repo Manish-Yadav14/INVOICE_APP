@@ -3,6 +3,8 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import InvoiceForm from "../InvoiceForm";
+import Invoice1 from "./Forms/Invoice1";
+import CompanyInvoice1 from "./Forms/CompanyInvoice1";
 import SavedEntries from "./SavedEntries";
 import CloudEntries from "./CloudEntries";
 import FormEntries from "./FormEntries";
@@ -22,9 +24,14 @@ const SavedEntriesStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="InvoiceForm"
+        name="Invoice1"
         component={InvoiceForm}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CompanyInvoice"
+        component={CompanyInvoice1}
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );
@@ -43,6 +50,7 @@ const CloudEntriesStack = () => {
         component={InvoiceForm}
         options={{ headerShown: false }}
       />
+      
     </Stack.Navigator>
   );
 };
@@ -58,7 +66,8 @@ const NewFilesStack = () => {
   };
   console.log("This hit");
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    initialRouteName="FormEntries">
       <Stack.Screen
         name="FormEntries"
         component={FormEntries}
@@ -67,7 +76,12 @@ const NewFilesStack = () => {
       <Stack.Screen
         name="NewFiles"
         component={InvoiceForm}
-        options={{ headerShown: false }}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="CompanyInvoice"
+        component={CompanyInvoice1}
+        options={{ headerShown: true }}
       />
     </Stack.Navigator>
   );
@@ -76,7 +90,7 @@ const NewFilesStack = () => {
 const handleLogout = async () => {
   try {
     await signOut(auth);
-    navigation.replace("Login"); // Navigate to login screen after logout
+    navigation.replace("Login");
   } catch (error) {
     console.error("Error signing out: ", error);
   }
@@ -84,8 +98,11 @@ const handleLogout = async () => {
 
 const Homescreen = () => {
   return (
-    <View style={styles.container}>
-    <CustomHeader/>
+    // <CustomHeader/>
+    // <View style={styles.container}>
+    
+    
+    // </View>
     <Tab.Navigator
       initialRouteName="NEW FILES"
       screenOptions={{
@@ -110,7 +127,7 @@ const Homescreen = () => {
           tabBarIcon: ({ focused }) => (
             <Image
               source={require("../assets/ic_action_folder.png")}
-              style={{ top: 5, width: 45, height: 45, resizeMode: "contain" }}
+              style={{ top: 5, width: 45, height: 45, resizeMode: "contain",tintColor: focused ? "#FFC107" : "grey" }}
             />
           ),
           tabBarLabel: "",
@@ -137,6 +154,7 @@ const Homescreen = () => {
                   width: 65,
                   height: 65,
                   resizeMode: "contain",
+                  tintColor: focused ? "#F44336" : "grey"
                 }}
               />
             </View>
@@ -151,15 +169,13 @@ const Homescreen = () => {
           tabBarIcon: ({ focused }) => (
             <Image
               source={require("../assets/ic_action_cloud_download.png")}
-              style={{ top: 5, width: 45, height: 45, resizeMode: "contain" }}
+              style={{ top: 5, width: 45, height: 45, resizeMode: "contain",tintColor: focused ? "#2196F3" : "grey" }}
             />
           ),
           tabBarLabel: "",
         }}
       />
     </Tab.Navigator>
-    
-    </View>
   );
 };
 

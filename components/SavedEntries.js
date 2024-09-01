@@ -21,7 +21,12 @@ const SavedEntries = ({navigation}) => {
     }
   };
   const editEntry = (entry) => {
-    navigation.navigate('InvoiceForm', { entry });
+    if (entry.Email && entry.Phone){
+      navigation.navigate('CompanyInvoice',{entry});
+    }
+    else{
+      navigation.navigate('InvoiceForm', { entry });
+    }
   };
 
 

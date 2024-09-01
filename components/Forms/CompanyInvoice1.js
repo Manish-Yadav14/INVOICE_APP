@@ -19,7 +19,7 @@ import FlatButton from "../../FlatButton";
 import SavedEntries from "../SavedEntries";
 
 
-const Invoice1 = ({ route, navigation }) => {
+const CompanyInvoice1 = ({ route, navigation }) => {
   const { entry } = route.params || {};
   const { control, handleSubmit, setValue, getValues,reset } = useForm({
     items: [{ description: "", price: 0 }],
@@ -31,11 +31,21 @@ const Invoice1 = ({ route, navigation }) => {
   });
   useEffect(() => {
     if (entry) {
-      setValue("to", entry.to || "");
-      setValue("from", entry.from || "");
+      setValue("CompanyName", entry.CompanyName || "");
+      setValue("CompanyAddress", entry.CompanyAddress || "");
+      setValue("Email", entry.Email || "");
+      setValue("Phone", entry.Phone || "");
+
+      setValue("CompanyNameto", entry.CompanyNameto || "");
+      setValue("CompanyAddressto", entry.CompanyAddressto || "");
+      setValue("Emailto", entry.Emailto || "");
+      setValue("Phoneto", entry.Phoneto || "");
+      setTax(entry.tax);
       setValue("date", entry.date || "");
       replace(entry.items || []);
       setFileName(entry.fileName || "");
+
+      
     } else {
       reset({
         to: "",
@@ -50,14 +60,13 @@ const Invoice1 = ({ route, navigation }) => {
 
   const [descrpt, setDescription] = useState("");
   const [prce, setPrice] = useState("");
-  const [invoiceData, setInvoiceData] = useState({});
+  // const [invoiceData, setInvoiceData] = useState({});
   const [visible, setVisible] = useState(false);
   const [fileName, setFileName] = useState('');
-
+  const [tax,setTax] = useState(0);
   const showDialog = () => setVisible(true);
   const handleCancel = () => setVisible(false);
 
-  const onSubmit = (data) => console.log(data);
 
   const addItem = async () => {
     if (descrpt === "" || prce === "") {
@@ -78,16 +87,25 @@ const Invoice1 = ({ route, navigation }) => {
     fields.forEach((item) => {
       total += item.price;
     });
-    return total > 0 ? total : "";
+    let taxrate=(Number(tax))/100;
+    total=total + total*taxrate;
+    return total*(1+taxrate) > 0 ? total : "";
   };
 
   // Function to save entry
   const saveEntry = async () => {
     const dataToSave = {
       fileName:fileName,
-      to: getValues("to"),
-      from: getValues("from"),
+      CompanyName:getValues("CompanyName"),
+      CompanyAddress:getValues("CompanyAddress"),
+      Email:getValues("Email"),
+      Phone:getValues("Phone"),
+      CompanyNameto:getValues("CompanyNameto"),
+      CompanyAddressto:getValues("CompanyAddressto"),
+      Emailto:getValues("Emailto"),
+      Phoneto:getValues("Phoneto"),
       date: getValues("date"),
+      tax:tax,
       items: fields,
       total: calcTotal(fields),
     };
@@ -123,9 +141,16 @@ const Invoice1 = ({ route, navigation }) => {
     setVisible(false);
     const dataToSave = {
       fileName:fileName,
-      to: getValues("to"),
-      from: getValues("from"),
+      CompanyName:getValues("CompanyName"),
+      CompanyAddress:getValues("CompanyAddress"),
+      Email:getValues("Email"),
+      Phone:getValues("Phone"),
+      CompanyNameto:getValues("CompanyNameto"),
+      CompanyAddressto:getValues("CompanyAddressto"),
+      Emailto:getValues("Emailto"),
+      Phoneto:getValues("Phoneto"),
       date: getValues("date"),
+      tax:tax,
       items: fields,
       total: calcTotal(fields),
     };
@@ -148,11 +173,13 @@ const Invoice1 = ({ route, navigation }) => {
 
 
       Alert.alert("New Entry saved successfully!");
-      setInvoiceData(dataToSave);
+      // setInvoiceData(dataToSave);
     } catch (error) {
       console.log("Error saving entry: ", error);
     }
   };
+  
+  
   const html = `
   <html>
       <head>
@@ -215,6 +242,7 @@ const Invoice1 = ({ route, navigation }) => {
       </body>
     </html>`;
 
+
   let generatePdf = async()=>{
       const file=await printToFileAsync({
         html:html,
@@ -222,40 +250,135 @@ const Invoice1 = ({ route, navigation }) => {
       });
       await shareAsync(file.uri);
   };
+
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>INVOICE</Text>
         {/* To FROM DATE CARD */}
         <Card style={{ padding: 10 }}>
+
+          {/* Company Name */}
+
+          <Controller
+            control={control}
+            name="CompanyName"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Company Name"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+          {/* Company Address */}
+          <Controller
+            control={control}
+            name="CompanyAddress"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Company Address"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+          {/* Email */}
+          <Controller
+            control={control}
+            name="Email"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+          {/* Phone */}
+          <Controller
+            control={control}
+            name="Phone"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Phone"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+
+          
           {/* To Input */}
+          
+
+          {/* Company Name */}
+
           <Controller
             control={control}
-            name="to"
+            name="CompanyNameto"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 style={styles.input}
-                placeholder="To"
+                placeholder="Company Name"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
               />
             )}
           />
-          {/* From Input */}
+          {/* Company Address */}
           <Controller
             control={control}
-            name="from"
+            name="CompanyAddressto"
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 style={styles.input}
-                placeholder="From"
+                placeholder="Company Address"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
               />
             )}
           />
+          {/* Email */}
+          <Controller
+            control={control}
+            name="Emailto"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+          {/* Phone */}
+          <Controller
+            control={control}
+            name="Phoneto"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Phone"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+
           {/* Date Input */}
           <Controller
             control={control}
@@ -334,6 +457,7 @@ const Invoice1 = ({ route, navigation }) => {
           <Card.Title title="Enter Invoice Details" />
           <Card.Content>
             {/* Add Item Section */}
+            <TextInput placeholder="Enter Tax Rate in %" keyboardType="numeric" value={tax} onChangeText={(text)=> setTax(text)}/>
             <Text style={styles.sectionTitle}>ADD ITEM</Text>
             <View style={styles.itemRow}>
               <TextInput
@@ -380,6 +504,7 @@ const Invoice1 = ({ route, navigation }) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: { padding: 16, marginBottom: 30, flex: 1 },
   title: {
@@ -416,4 +541,4 @@ const styles = StyleSheet.create({
   itemInput: { height: 40, width: 70, overflow: "hidden" },
 });
 
-export default Invoice1;
+export default CompanyInvoice1;
