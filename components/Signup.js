@@ -19,26 +19,29 @@ const Signup = ({navigation}) => {
   };
 
   return (
-    <View style={{flex:1,justifyContent:'center',alignContent:'center',width:'60%',alignSelf:'center'}}>
-      <Text>Signup</Text>
+    <View style={{flex:1,justifyContent:'center',alignContent:'center',alignSelf:'center'}}>
+      <Text style={ {fontSize: 32,fontWeight: 'bold', color: '#333',marginBottom: 10,marginLeft:100 }} >Signup</Text>
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
       <TextInput
-        placeholder="Email"
+        placeholder="Enter Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
-        style={{ borderWidth: 1, margin: 10, padding: 8 }}
+        style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
       <TextInput
-        placeholder="Password"
+        placeholder="Enter Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ borderWidth: 1, margin: 10, padding: 8 }}
+        style={{ borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 ,marginBottom:20}}
       />
-      <FlatButton text="Already a user? Login" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("Login")}/>
+
       <Button title="Signup" onPress={handleSignup} />
+      <Text>     </Text>
+      <FlatButton text="Already a user? Login" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("Login")}/>
+
     </View>
   );
 };

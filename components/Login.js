@@ -22,10 +22,10 @@ const Login = ({navigation}) => {
 
   return (
     <View style={{flex:1,justifyContent:'center',alignContent:'center',alignSelf:'center'}}>
-      <Text>Login</Text>
+      <Text style={ {fontSize: 32,fontWeight: 'bold', color: '#333',marginBottom: 10,marginLeft:110}}>Login</Text>
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
       <TextInput
-        placeholder="Email"
+        placeholder="Enter Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -33,15 +33,16 @@ const Login = ({navigation}) => {
         style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
       <TextInput
-        placeholder="Password"
+        placeholder="Enter Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
         style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
-      <FlatButton text="Not A USER? SIGN UP" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("SignUp")}/>
 
       <Button title="Login" onPress={handleLogin} />
+      <Text>  </Text>
+      <FlatButton text="Not A USER? SIGN UP" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("SignUp")}/>
     </View>
   );
 };
