@@ -1,4 +1,3 @@
-// SavedEntries.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import FlatButton from '../FlatButton';
@@ -30,12 +29,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     floatingButton: {
-        marginBottom: 10, // Adjust as needed
+        marginBottom: 10, 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
-        elevation: 5, // Android shadow
+        elevation: 5,
         borderRadius: 8,
     },
 });

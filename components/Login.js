@@ -2,32 +2,27 @@
 import React, { useState } from "react";
 import { View, TextInput, Button, Text } from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../firebase'; // Adjust path as necessary
-import InvoiceForm from "../InvoiceForm";
-// import { useNavigation } from "@react-navigation/native"; // Import navigation hook
+import { auth } from '../firebase'; 
+import FlatButton from "../FlatButton";
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  // const navigation = useNavigation(); // Access the navigation object
 
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("User logged in successfully");
       navigation.replace('Home')
-
-       // Navigate to the InvoiceForm component
-      //  navigation.navigate("InvoiceForm");
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <View>
-      <Text style={{margin:'auto' }}>Login</Text>
+    <View style={{flex:1,justifyContent:'center',alignContent:'center',alignSelf:'center'}}>
+      <Text>Login</Text>
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
       <TextInput
         placeholder="Email"
@@ -44,6 +39,8 @@ const Login = ({navigation}) => {
         secureTextEntry
         style={{width:280, borderWidth: 1, margin: 10, padding: 8,overflow:'hidden',borderRadius:8 }}
       />
+      <FlatButton text="Not A USER? SIGN UP" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("SignUp")}/>
+
       <Button title="Login" onPress={handleLogin} />
     </View>
   );

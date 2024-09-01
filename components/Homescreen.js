@@ -3,16 +3,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import InvoiceForm from "../InvoiceForm";
-import Invoice1 from "./Forms/Invoice1";
 import SavedEntries from "./SavedEntries";
 import CloudEntries from "./CloudEntries";
 import FormEntries from "./FormEntries";
-import { shadow, Title } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Define a stack navigator for each tab
 const SavedEntriesStack = () => {
   return (
     <Stack.Navigator>
@@ -46,28 +43,27 @@ const CloudEntriesStack = () => {
     </Stack.Navigator>
   );
 };
+
 const NewFilesStack = () => {
   const emptyEntry = {
-    fileName: '',
-    to: '',
-    from: '',
-    date: '',
+    fileName: "",
+    to: "",
+    from: "",
+    date: "",
     items: [{ description: "", price: 0 }],
     total: 0,
   };
   console.log("This hit");
   return (
-    <Stack.Navigator> 
+    <Stack.Navigator>
       <Stack.Screen
         name="FormEntries"
         component={FormEntries}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name = "NewFiles"
-        component = {InvoiceForm}
-        // key = {Date.now().toString()}
-        // initialParams={{ entry: null,flag: true }}
+        name="NewFiles"
+        component={InvoiceForm}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -77,6 +73,7 @@ const NewFilesStack = () => {
 const Homescreen = () => {
   return (
     <Tab.Navigator
+      initialRouteName="NEW FILES"
       screenOptions={{
         tabBarStyle: {
           bottom: 25,
@@ -86,14 +83,15 @@ const Homescreen = () => {
           height: 60,
           width: 340,
         },
-        detachPreviousScreen:true,
+
+        detachPreviousScreen: true,
         headerShown: false,
         tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
         name="ALL FILE"
-        component={SavedEntriesStack} // Use the stack for SavedEntries
+        component={SavedEntriesStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -106,7 +104,7 @@ const Homescreen = () => {
       />
       <Tab.Screen
         name="NEW FILES"
-        component={NewFilesStack} // Use the stack for NewFiles
+        component={NewFilesStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <View
@@ -138,11 +136,7 @@ const Homescreen = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
-              source={
-                focused
-                  ? require("../assets/ic_action_cloud_download.png") // Active icon
-                  : require("../assets/ic_action_cloud_download.png") // Inactive icon
-              }
+              source={require("../assets/ic_action_cloud_download.png")}
               style={{ top: 5, width: 45, height: 45, resizeMode: "contain" }}
             />
           ),

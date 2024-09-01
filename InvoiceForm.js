@@ -17,7 +17,7 @@ import { printToFileAsync } from "expo-print";
 import { shareAsync } from "expo-sharing";
 import Dialog from "react-native-dialog";
 import FlatButton from "./FlatButton";
-
+import SavedEntries from "./components/SavedEntries";
 const InvoiceForm = ({ route, navigation }) => {
   const { entry } = route.params || {};
   const { control, handleSubmit, setValue, getValues,reset } = useForm({
@@ -28,17 +28,14 @@ const InvoiceForm = ({ route, navigation }) => {
     control,
     name: "items",
   });
-  // console.log(flag)
   useEffect(() => {
     if (entry) {
-      // Resetting form state
       setValue("to", entry.to || "");
       setValue("from", entry.from || "");
       setValue("date", entry.date || "");
       replace(entry.items || []);
       setFileName(entry.fileName || "");
     } else {
-      // In case no entry is passed, initialize with empty values
       reset({
         to: "",
         from: "",
@@ -52,7 +49,7 @@ const InvoiceForm = ({ route, navigation }) => {
 
   const [descrpt, setDescription] = useState("");
   const [prce, setPrice] = useState("");
-  const [invoiceData, setInvoiceData] = useState({}); // State to store the current invoice data
+  const [invoiceData, setInvoiceData] = useState({});
   const [visible, setVisible] = useState(false);
   const [fileName, setFileName] = useState('');
 
@@ -147,6 +144,8 @@ const InvoiceForm = ({ route, navigation }) => {
 
       const updatedEntries = [...existingEntries, dataToSave];
       await AsyncStorage.setItem("entries", JSON.stringify(updatedEntries));
+
+
       Alert.alert("New Entry saved successfully!");
       setInvoiceData(dataToSave);
     } catch (error) {

@@ -1,9 +1,8 @@
-// Signup.js
 import React, { useState } from "react";
 import { View, TextInput, Button, Text } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase"; // Adjust path as necessary
-
+import { auth } from "../firebase";
+import FlatButton from "../FlatButton";
 const Signup = ({navigation}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,14 +13,13 @@ const Signup = ({navigation}) => {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered successfully");
       navigation.replace('Home')
-      // Handle post-registration actions here, like navigation
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <View style={{justifyContent:"center",alignContent:'center'}}>
+    <View style={{flex:1,justifyContent:'center',alignContent:'center',width:'60%',alignSelf:'center'}}>
       <Text>Signup</Text>
       {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
       <TextInput
@@ -39,6 +37,7 @@ const Signup = ({navigation}) => {
         secureTextEntry
         style={{ borderWidth: 1, margin: 10, padding: 8 }}
       />
+      <FlatButton text="Already a user? Login" c="#edede9" color='#00b4d8' onPress={()=>navigation.replace("Login")}/>
       <Button title="Signup" onPress={handleSignup} />
     </View>
   );

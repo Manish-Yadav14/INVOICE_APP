@@ -1,4 +1,3 @@
-// SavedEntries.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,7 +10,7 @@ const SavedEntries = ({navigation}) => {
   const user = auth.currentUser;
   useEffect(() => {
     loadEntries();
-  });
+  },[entries]);
 
   const loadEntries = async () => {
     try {
@@ -22,7 +21,6 @@ const SavedEntries = ({navigation}) => {
     }
   };
   const editEntry = (entry) => {
-    // Navigate to InvoiceForm with entry data as parameters
     navigation.navigate('InvoiceForm', { entry });
   };
 

@@ -1,15 +1,14 @@
 import React from "react";
 import { StyleSheet,TouchableOpacity,Text,View } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { Icon } from "react-native-vector-icons/Icon";
-export default function FlatButton({text,c,onPress,iconname,iconcolor}){
+export default function FlatButton({text,c,onPress,iconname,iconcolor,color, style1, style2, style3}){
     return(
         <TouchableOpacity onPress={onPress}>
-            <View style={[styles.button,{backgroundColor:c,borderRadius:25}]}>
+            <View style={[styles.button,{backgroundColor:c,borderRadius:25,},style1]}>
             {iconname ? (
-                <Icon name={iconname} size={30} color={iconcolor} />
+                <Icon name={iconname} size={30} color={iconcolor} style={style2} />
             ) : (
-                <Text style={styles.buttonText}>{text}</Text>
+                <Text style={[styles.buttonText,{color:color},style3]}>{text}</Text>
             )}
             </View>
         </TouchableOpacity>
@@ -19,8 +18,6 @@ export default function FlatButton({text,c,onPress,iconname,iconcolor}){
 const styles= StyleSheet.create({
     button:{
         borderRadius:25,
-        // paddingVertical:14,
-        // paddingHorizontal:10,
         backgroundColor:'#00ABE7',
         marginTop:5,
         marginBottom:5,

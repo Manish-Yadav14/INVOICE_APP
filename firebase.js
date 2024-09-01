@@ -1,10 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getReactNativePersistence,initializeAuth } from "firebase/auth"; // For Authentication
+import { getReactNativePersistence,initializeAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAwGDVsqHh3uar2vG1YhVdg-PfCkcM4HiM",
   authDomain: "invoice-app-968fa.firebaseapp.com",

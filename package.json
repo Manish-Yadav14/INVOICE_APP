@@ -13,7 +13,10 @@
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
+    "dot-env": "^0.0.1",
+    "dotenv": "^16.4.5",
     "expo": "~51.0.28",
+    "expo-constants": "^16.0.2",
     "expo-print": "^13.0.1",
     "expo-router": "^3.5.23",
     "expo-sharing": "^12.0.1",
@@ -31,7 +34,8 @@
     "react-native-vector-icons": "^10.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "react-native-dotenv": "^3.4.11"
   },
   "private": true
 }
