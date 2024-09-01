@@ -36,7 +36,7 @@ const Login = ({navigation}) => {
       setError(err.message);
     }
   };
-
+    
     return (
       <View style={{flex:1,justifyContent:'center',alignContent:'center',alignSelf:'center'}}>
         <Text style={ {fontSize: 32,fontWeight: 'bold', color: '#333',marginBottom: 10,marginLeft:110}}>Login</Text>

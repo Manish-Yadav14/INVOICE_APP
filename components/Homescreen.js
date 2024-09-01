@@ -6,7 +6,10 @@ import InvoiceForm from "../InvoiceForm";
 import SavedEntries from "./SavedEntries";
 import CloudEntries from "./CloudEntries";
 import FormEntries from "./FormEntries";
-
+import { signOut } from "firebase/auth";
+import { Button } from 'react-native-paper';
+import {auth} from '../firebase'
+import CustomHeader from "./CustomHeader";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -70,14 +73,25 @@ const NewFilesStack = () => {
   );
 };
 
+const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    navigation.replace("Login"); // Navigate to login screen after logout
+  } catch (error) {
+    console.error("Error signing out: ", error);
+  }
+};
+
 const Homescreen = () => {
   return (
+    <View style={styles.container}>
+    <CustomHeader/>
     <Tab.Navigator
       initialRouteName="NEW FILES"
       screenOptions={{
         tabBarStyle: {
           bottom: 25,
-          left: 25,
+          left: 3,
           right: 25,
           borderRadius: 15,
           height: 60,
@@ -144,9 +158,24 @@ const Homescreen = () => {
         }}
       />
     </Tab.Navigator>
+    
+    </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    alignSelf:'center' // Ensures the container takes up the full screen
+  },
+  logoutButton: {
+    // position: 'relative', // Position the button absolutely
+    top: 40, // 10 pixels from the top
+    right: 60, // 10 pixels from the left
+    fontSize:30,
+  },
+});
 
 export default Homescreen;
