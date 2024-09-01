@@ -32,7 +32,11 @@ const CloudEntries = ({navigation}) => {
         Alert.alert("File Already Exists");
         return ;
       }
-      navigation.navigate('InvoiceForm', { entry });
+      const updatedEntries = [...existingEntries, entry];
+      await AsyncStorage.setItem("entries", JSON.stringify(updatedEntries));
+      Alert.alert("Entry Added To Directory Successfully!");
+
+      // navigation.navigate('InvoiceForm', { entry });
   };
 
 
@@ -102,11 +106,9 @@ const CloudEntries = ({navigation}) => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.entry}>
-              <Text>FileName: {item.fileName}</Text>
-              <Text>To: {item.to}</Text>
-              <Text>From: {item.from}</Text>
-              <Text>Date: {item.date}</Text>
-              <Text>Total: {item.total}</Text>
+              <Text style={styles.text}>FileName: {item.fileName}</Text>
+              <Text style={styles.text}>Date: {item.date}</Text>
+              <Text style={styles.text}>Total: {item.total}</Text>
               <Button title="Edit" onPress={() => editEntry(item)} />
               <View style={{ margin: 5 }} />
               <Button title="Delete" onPress={() => deleteEntry(item.id)} />
@@ -149,8 +151,9 @@ const CloudEntries = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
-  entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8 }
+  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center' },
+  entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8 },
+  text:{fontSize:23,fontWeight:'300'}
 });
 
 export default CloudEntries;

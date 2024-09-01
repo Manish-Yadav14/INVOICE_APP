@@ -99,9 +99,9 @@ const SavedEntries = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' },
+  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center',marginTop:25, },
   entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8, },
-  text:{fontSize:20,fontWeight:'300'}
+  text:{fontSize:23,fontWeight:'300'}
 });
 
 export default SavedEntries;
