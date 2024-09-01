@@ -78,7 +78,7 @@ const CloudEntries = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.title}>Cloud Data</Text>
+        <Text style={styles.title}>Cloud Invoices</Text>
         <FlatList
           data={invoices}
           keyExtractor={(item) => item.id}

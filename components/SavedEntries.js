@@ -71,8 +71,7 @@ const SavedEntries = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Saved Entries</Text>
-
+      <Text style={styles.title}>Saved Invoices</Text>
       <FlatList
         data={entries}
         keyExtractor={(item, index) => index.toString()}
@@ -97,9 +96,9 @@ const SavedEntries = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
-  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center',marginTop:25, },
+  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center',marginTop:25,marginTop:50},
   entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8, },
-  text:{fontSize:23,fontWeight:'300'}
+  text:{fontSize:23,fontWeight:'300'},
 });
 
 export default SavedEntries;
