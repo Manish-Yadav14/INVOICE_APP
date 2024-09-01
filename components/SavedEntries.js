@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, addDoc,getDocs, query, where } from "firebase/firestore";
 import { db,auth } from "../firebase";
 import FlatButton from '../FlatButton.js'
+import { signOut } from 'firebase/auth';
+import { Button } from 'react-native-paper';
+
 
 const SavedEntries = ({navigation}) => {
   const [entries, setEntries] = useState([]);
@@ -74,8 +77,27 @@ const SavedEntries = ({navigation}) => {
       Alert.alert("Error", "Failed to upload the invoice.");
     }
   };
+
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.replace('Login'); // Navigate to login screen after logout
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
+
   return (
     <View style={styles.container}>
+      <Button 
+        onPress={handleLogout} 
+        labelStyle={styles.logoutButtonText} // Set the label style to increase font size
+        style={styles.logoutButton}
+      >
+        Logout
+      </Button>
       <Text style={styles.title}>Saved Invoices</Text>
       <FlatList
         data={entries}
@@ -100,7 +122,14 @@ const SavedEntries = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16,position:'relative' },
+  logoutButton: {
+    position: 'absolute',
+    top: 10,  // Adjust as needed
+    right: 10, // Adjust as needed
+    backgroundColor: '#E9F0F5', // Or any other color
+    marginTop:30,
+  },
   title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center',marginTop:25,marginTop:50},
   entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8, },
   text:{fontSize:23,fontWeight:'300'},

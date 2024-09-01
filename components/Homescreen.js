@@ -11,7 +11,7 @@ import FormEntries from "./FormEntries";
 import { signOut } from "firebase/auth";
 import { Button } from 'react-native-paper';
 import {auth} from '../firebase'
-import CustomHeader from "./CustomHeader";
+// import CustomHeader from "./CustomHeader";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -108,7 +108,7 @@ const Homescreen = () => {
       screenOptions={{
         tabBarStyle: {
           bottom: 25,
-          left: 3,
+          left: 25,
           right: 25,
           borderRadius: 15,
           height: 60,

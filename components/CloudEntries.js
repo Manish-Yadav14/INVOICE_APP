@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, FlatList,Button, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs,doc,deleteDoc} from "firebase/firestore";
 import { db,auth } from "../firebase";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { signOut } from 'firebase/auth';
+import { Button as LOGOUT } from 'react-native-paper';
 
-const CloudEntries = () => {
+const CloudEntries = ({navigation}) => {
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
@@ -75,9 +77,25 @@ const CloudEntries = () => {
 
   console.log(invoices);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.replace('Login'); // Navigate to login screen after logout
+    } catch (error) {
+      console.error('Error signing out: ', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
+      <LOGOUT 
+        onPress={handleLogout} 
+        labelStyle={styles.logoutButtonText} // Set the label style to increase font size
+        style={styles.logoutButton}
+      >
+        Logout
+      </LOGOUT>
         <Text style={styles.title}>Cloud Invoices</Text>
         <FlatList
           data={invoices}
@@ -100,8 +118,15 @@ const CloudEntries = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center' },
+  container: { flex: 1, padding: 10,position:'relative' },
+  logoutButton: {
+    position: 'absolute',
+    top: 0,  // Adjust as needed
+    right: 10, // Adjust as needed
+    backgroundColor: '#E9F0F5', // Or any other color
+    marginTop:30,
+  },
+  title: { fontSize: 24, fontWeight: '450', marginBottom: 16, textAlign: 'center',paddingTop:10 },
   entry: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 8 },
   text:{fontSize:23,fontWeight:'300'}
 });

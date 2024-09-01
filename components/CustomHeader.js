@@ -2,8 +2,8 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import { signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
 const CustomHeader = () => {
