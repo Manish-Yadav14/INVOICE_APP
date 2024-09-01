@@ -28,7 +28,7 @@ const SavedEntries = ({navigation}) => {
       navigation.navigate('CompanyInvoice',{entry});
     }
     else{
-      navigation.navigate('InvoiceForm', { entry });
+      navigation.navigate('Invoice1', { entry });
     }
   };
 

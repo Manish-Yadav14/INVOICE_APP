@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "invoice",
-    "displayName":"invoice",
+    "displayName": "invoice",
     "slug": "invoice",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "permissions":[
+        "permissions": [
           "WRITE_EXTERNAL_STORAGE",
           "READ_EXTERNAL_STORAGE"
         ]
@@ -27,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cc0468fe-d881-46ba-a00c-103b8e527496"
+      }
     }
-  } 
+  }
 }

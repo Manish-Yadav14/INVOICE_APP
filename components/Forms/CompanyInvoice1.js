@@ -35,7 +35,6 @@ const CompanyInvoice1 = ({ route, navigation }) => {
       setValue("CompanyAddress", entry.CompanyAddress || "");
       setValue("Email", entry.Email || "");
       setValue("Phone", entry.Phone || "");
-
       setValue("CompanyNameto", entry.CompanyNameto || "");
       setValue("CompanyAddressto", entry.CompanyAddressto || "");
       setValue("Emailto", entry.Emailto || "");
@@ -181,66 +180,113 @@ const CompanyInvoice1 = ({ route, navigation }) => {
   
   
   const html = `
-  <html>
-      <head>
-        <style>
-          body {
+  <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-          }
-          .header {
-            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 20px;
-          }
-          .details {
-            margin-bottom: 20px;
-          }
-          .details div {
-            margin-bottom: 10px;
-          }
-          .invoice-table {
+        }
+
+        .company-info {
+            margin: 0;
+        }
+
+        .invoice-table {
             width: 100%;
             border-collapse: collapse;
-          }
-          .invoice-table th, .invoice-table td {
-            border: 1px solid black;
+        }
+
+        .invoice-table th, .invoice-table td {
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
-          }
-          .invoice-table th {
-            background-color: #f2f2f2;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <h1>INVOICE</h1>
-        </div>
-        <div class="details">
-          <div><strong>To:</strong> ${getValues("to")}</div>
-          <div><strong>From:</strong> ${getValues("from")}</div>
-          <div><strong>Date:</strong> ${getValues("date")}</div>
+        }
+
+        .invoice-table th {
+            background-color: #f4f4f4;
+        }
+
+        .invoice-table tfoot {
+            font-weight: bold;
+        }
+
+        .cell-header {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-container">
+        <h1>Invoice: ${fileName}</h1>
+        <div class="invoice-header">
+            <div class="company-info">
+                <h2>Company</h2>
+                <p><strong>CompanyName: ${getValues("CompanyName")}</strong></p>
+                <p>CompanyAddress: ${getValues("CompanyAddress")}</p>
+                <p>Email: ${getValues("Email")}</p>
+                <p>Phone: ${getValues("Phone")}</p>
+            </div>
+            <div class="company-info">
+                <h2>To</h2>
+                <p><strong>CompanyName: ${getValues("CompanyNameto")}</strong></p>
+                <p>CompanyAddress: ${getValues("CompanyAddressto")}</p>
+                <p>Email: ${getValues("Emailto")}</p>
+                <p>Phone: ${getValues("Phoneto")}</p>
+            </div>
         </div>
         <table class="invoice-table">
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${fields.map(item => `
-              <tr>
-                <td>${item.description}</td>
-                <td>${item.price}</td>
-              </tr>
-            `).join('')}
+            <thead>
+                <tr>
+                    <th class="cell-header">Description</th>
+                    <th class="cell-header">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${fields.map(item => 
+                    `<tr>
+                        <td>${item.description}</td>
+                        <td>${item.price}</td>
+                    </tr>`
+                ).join('')}
             </tbody>
-            </table>
-            <h2 display: flex;
+            <tfoot>
+                <tr>
+                    <td><strong>Tax</strong></td>
+                    <td>${tax}%</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div>
+        <h2 display: flex;
+            justify-content: space-between;>SubTotal: ${(calcTotal(fields)/(1+(Number(tax))/100))}</h2>
+        <h2 display: flex;
+            justify-content: space-between;>TaxRate: ${tax} %</h2>
+        <h2 display: flex;
             justify-content: space-between;>Total ${calcTotal(fields)}</h2>
-      </body>
-    </html>`;
+        </div>
+    </div>
+</body>
+</html>`;
 
 
   let generatePdf = async()=>{
